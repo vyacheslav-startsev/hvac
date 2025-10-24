@@ -1,0 +1,131 @@
+
+services:
+  # Valkey сервис
+  redis:
+    image: valkey/valkey:8-alpine
+    container_name: pdf_valkey
+    ports:
+      - "${REDIS_EXTERNAL_PORT:-6379}:${REDIS_PORT:-6379}"
+    volumes:
+      - ./data/redis:/data
+    command: valkey-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - pdf_network
+
+  # Координатор - запускает обработку PDF
+  coordinator:
+    build: .
+    container_name: pdf_coordinator
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+    volumes:
+      - ./pdfs:/app/pdfs:ro
+      - ./temp:/app/temp
+      - ./output:/app/output
+    networks:
+      - pdf_network
+    command: tail -f /dev/null  # Держать контейнер запущенным
+    profiles:
+      - coordinator
+
+  # Воркеры для текстовых страниц
+  text-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.text-worker
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+    volumes:
+      - ./pdfs:/app/pdfs:ro
+      - ./temp:/app/temp
+    networks:
+      - pdf_network
+    command: python run_text_worker.py
+    deploy:
+      replicas: 2
+    restart: unless-stopped
+
+  # Воркеры для OCR страниц
+  ocr-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.ocr-worker
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - OCR_USE_GPU=${OCR_USE_GPU:-false}
+    volumes:
+      - ./pdfs:/app/pdfs:ro
+      - ./temp:/app/temp
+    networks:
+      - pdf_network
+    command: python run_ocr_worker.py
+    deploy:
+      replicas: 2
+    restart: unless-stopped
+
+  # Qdrant векторная база для semantic matching синонимов
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: hvac_qdrant
+    ports:
+      - "${QDRANT_HTTP_PORT:-6333}:6333"  # HTTP API
+      - "${QDRANT_GRPC_PORT:-6334}:6334"  # gRPC API
+    volumes:
+      - ./data/qdrant:/qdrant/storage
+    restart: unless-stopped
+    networks:
+      - pdf_network
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=${QDRANT_GRPC_PORT:-6334}
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 1 bash -c 'cat < /dev/null > /dev/tcp/localhost/6333' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Инициализация Qdrant при первом запуске
+  qdrant-init:
+    build:
+      context: .
+      dockerfile: Dockerfile.qdrant-init
+    container_name: hvac_qdrant_init
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+    networks:
+      - pdf_network
+    restart: "no"  # Запустить один раз при инициализации
+
+networks:
+  pdf_network:
+    driver: bridge
+

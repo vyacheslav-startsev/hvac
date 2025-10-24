@@ -1,0 +1,14 @@
+# Базовые зависимости
+-r requirements-base.txt
+
+# LangChain экосистема
+langchain>=0.3.0
+langchain-openai>=0.2.0
+langchain-anthropic>=0.2.0
+langchain-core>=0.3.0
+langchain-community>=0.3.0
+
+# Fuzzy matching и semantic search
+rapidfuzz>=3.0.0
+qdrant-client>=1.7.0
+sentence-transformers>=3.0.0

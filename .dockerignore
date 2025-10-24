@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# Temporary files
+temp/
+*.tmp
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+Dockerfile.ocr-worker
+Dockerfile.qdrant-init
+Dockerfile.text-worker
+docker-compose.yml
+
+# Documentation
+*.md
+
+# Test files and data directories (mounted as volumes)
+pdfs/
+output/
+data/

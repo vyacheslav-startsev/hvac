@@ -1,0 +1,2 @@
+# Зависимости для text-worker
+-r requirements-base.txt

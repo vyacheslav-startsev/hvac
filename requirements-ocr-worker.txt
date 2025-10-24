@@ -1,0 +1,10 @@
+# Зависимости для ocr-worker
+-r requirements-base.txt
+
+# PDF и OCR обработка
+pdf2image>=1.17.0
+paddleocr>=2.7.0
+
+# Базовые утилиты
+Pillow>=10.0.0
+numpy>=1.24.0,<2.0.0

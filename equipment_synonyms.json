@@ -1,0 +1,180 @@
+{
+  "version": "v1.0.0",
+  "last_updated": "2025-10-23",
+  "equipment_synonyms": [
+    {
+      "canonical": "centrifugal_pump",
+      "synonyms_en": [
+        "centrifugal pump",
+        "cent pump",
+        "cent. pump",
+        "rotary pump",
+        "circulation pump"
+      ],
+      "synonyms_ru": [
+        "центробежный насос",
+        "центр. насос",
+        "центробежн. насос",
+        "циркуляционный насос"
+      ],
+      "category": "pumps",
+      "metadata": {
+        "industry": "hvac",
+        "common_typos": ["centrafugal", "центробешный"],
+        "abbreviations": ["ЦН", "CP"]
+      }
+    },
+    {
+      "canonical": "heat_exchanger",
+      "synonyms_en": [
+        "heat exchanger",
+        "HX",
+        "H/X",
+        "heat transfer unit",
+        "thermal exchanger"
+      ],
+      "synonyms_ru": [
+        "теплообменник",
+        "теплообм.",
+        "ТО",
+        "теплопередающий аппарат"
+      ],
+      "category": "heat_transfer",
+      "metadata": {
+        "industry": "hvac",
+        "common_typos": ["heat exhanger", "теплообменик"],
+        "abbreviations": ["HX", "ТО"]
+      }
+    },
+    {
+      "canonical": "air_handling_unit",
+      "synonyms_en": [
+        "air handling unit",
+        "AHU",
+        "air handler",
+        "air treatment unit",
+        "ventilation unit"
+      ],
+      "synonyms_ru": [
+        "приточно-вытяжная установка",
+        "ПВУ",
+        "вентиляционная установка",
+        "вент. установка",
+        "воздухообрабатывающий агрегат"
+      ],
+      "category": "ventilation",
+      "metadata": {
+        "industry": "hvac",
+        "common_typos": ["air handeling unit"],
+        "abbreviations": ["AHU", "ПВУ"]
+      }
+    },
+    {
+      "canonical": "chiller",
+      "synonyms_en": [
+        "chiller",
+        "cooling unit",
+        "water chiller",
+        "refrigeration unit"
+      ],
+      "synonyms_ru": [
+        "чиллер",
+        "холодильная машина",
+        "водоохлаждающая машина",
+        "холод. машина"
+      ],
+      "category": "cooling",
+      "metadata": {
+        "industry": "hvac",
+        "common_typos": ["chiler"],
+        "abbreviations": ["CH"]
+      }
+    },
+    {
+      "canonical": "fan_coil_unit",
+      "synonyms_en": [
+        "fan coil unit",
+        "FCU",
+        "fan coil",
+        "terminal unit"
+      ],
+      "synonyms_ru": [
+        "фанкойл",
+        "фан-койл",
+        "вентиляторный доводчик",
+        "вент. доводчик"
+      ],
+      "category": "terminal_units",
+      "metadata": {
+        "industry": "hvac",
+        "common_typos": ["fancoil"],
+        "abbreviations": ["FCU"]
+      }
+    },
+    {
+      "canonical": "expansion_tank",
+      "synonyms_en": [
+        "expansion tank",
+        "expansion vessel",
+        "buffer tank",
+        "pressure tank"
+      ],
+      "synonyms_ru": [
+        "расширительный бак",
+        "расшир. бак",
+        "экспанзомат",
+        "компенсационный бак"
+      ],
+      "category": "accessories",
+      "metadata": {
+        "industry": "hvac",
+        "common_typos": [],
+        "abbreviations": ["ET", "РБ"]
+      }
+    },
+    {
+      "canonical": "valve",
+      "synonyms_en": [
+        "valve",
+        "control valve",
+        "shut-off valve",
+        "isolation valve",
+        "ball valve"
+      ],
+      "synonyms_ru": [
+        "клапан",
+        "вентиль",
+        "задвижка",
+        "запорная арматура",
+        "шаровой кран"
+      ],
+      "category": "piping",
+      "metadata": {
+        "industry": "hvac",
+        "common_typos": [],
+        "abbreviations": ["V"]
+      }
+    },
+    {
+      "canonical": "filter",
+      "synonyms_en": [
+        "filter",
+        "air filter",
+        "strainer",
+        "filtration unit"
+      ],
+      "synonyms_ru": [
+        "фильтр",
+        "воздушный фильтр",
+        "сетчатый фильтр",
+        "грязевик"
+      ],
+      "category": "accessories",
+      "metadata": {
+        "industry": "hvac",
+        "common_typos": [],
+        "abbreviations": ["F"]
+      }
+    }
+  ]
+}

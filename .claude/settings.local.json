@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(docker-compose down:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(grep:*)",
+      "Bash(mkdir:*)",
+      "Bash(git mv:*)",
+      "Bash(move:*)",
+      "Bash(move docker-compose.yml dockerdocker-compose.yml)",
+      "Bash(move .dockerignore docker.dockerignore)",
+      "Bash(mv:*)",
+      "Bash(cp:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker rm:*)",
+      "Bash(while read f)",
+      "Bash(done)",
+      "Bash(find:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

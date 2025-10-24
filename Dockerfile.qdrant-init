@@ -1,0 +1,27 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Установка системных зависимостей
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Копирование файлов зависимостей
+COPY requirements-base.txt .
+COPY requirements.txt .
+
+# Установка Python зависимостей для Qdrant инициализации
+RUN pip install --no-cache-dir \
+    python-dotenv>=1.0.0 \
+    qdrant-client>=1.7.0 \
+    sentence-transformers>=3.0.0
+
+# Копирование необходимых файлов
+COPY config.py .
+COPY init_qdrant.py .
+COPY equipment_synonyms.json .
+
+# Команда запуска
+CMD ["python", "init_qdrant.py"]

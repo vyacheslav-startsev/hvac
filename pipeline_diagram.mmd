@@ -1,0 +1,46 @@
+```mermaid
+graph TD
+    A[PDF Document] --> B[Stage 1: Text Extraction]
+
+    B --> B1[PDFCoordinator<br/>анализирует и классифицирует страницы]
+    B1 --> B2[Текстовые страницы]
+    B1 --> B3[Графические страницы]
+
+    B2 --> B4[text_worker<br/>PyMuPDF]
+    B3 --> B5[ocr_worker<br/>PaddleOCR]
+
+    B4 --> B6[TaskTracker<br/>отслеживает прогресс]
+    B5 --> B6
+
+    B6 --> B7[Output: pdf_path, page_texts,<br/>redis_stats, job_id]
+
+    B7 --> C[Stage 2: LLM Extraction]
+
+    C --> C1[EquipmentExtractor<br/>постраничная обработка]
+    C1 --> C2[GPT-4o primary]
+    C1 --> C3[Claude 3.5 Sonnet fallback]
+
+    C2 --> C4[Structured output<br/>через Pydantic schemas]
+    C3 --> C4
+
+    C4 --> C5[Output: raw_equipment<br/>name, model, quantity]
+
+    C5 --> D[Stage 3: Synonym Matching]
+
+    D --> D1[EquipmentMatcher<br/>гибридный подход]
+    D1 --> D2[Tier 1: Exact Match]
+    D2 --> D3[Tier 2: Fuzzy Match]
+    D3 --> D4[Tier 3: Semantic Match]
+
+    D4 --> D5[Output: matched_equipment,<br/>unmatched_equipment]
+
+    D5 --> E[Stage 4: Output Formatting & Save]
+
+    E --> E1[JSON с metadata,<br/>statistics, equipment]
+    E1 --> E2[Сохраненный JSON файл]
+
+    style B fill:#e1f5ff
+    style C fill:#fff4e1
+    style D fill:#ffe1f5
+    style E fill:#e1ffe1
+```
