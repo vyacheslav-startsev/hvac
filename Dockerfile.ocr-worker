@@ -24,6 +24,11 @@ RUN pip install --no-cache-dir -r requirements-ocr-worker.txt
 # Скопировать код приложения
 COPY . .
 
+# Предзагрузить модели PaddleOCR в образ
+RUN mkdir -p /root/.paddlex && \
+    python -c "from paddleocr import PaddleOCR; PaddleOCR(lang='ru')" && \
+    cp -r /root/.paddlex /app/paddlex_cache
+
 # Создать директорию для временных файлов
 RUN mkdir -p /app/temp
 
@@ -34,5 +39,14 @@ ENV REDIS_DB=0
 ENV TEMP_DIR=/app/temp
 ENV PYTHONUNBUFFERED=1
 
+# Скрипт для копирования моделей в volume при первом запуске
+RUN echo '#!/bin/bash\n\
+if [ ! -d "/root/.paddlex/official_models" ]; then\n\
+  echo "Копирование предзагруженных моделей в volume..."\n\
+  cp -r /app/paddlex_cache/* /root/.paddlex/\n\
+fi\n\
+exec python run_ocr_worker.py' > /app/entrypoint.sh && \
+    chmod +x /app/entrypoint.sh
+
 # Точка входа
-CMD ["python", "run_ocr_worker.py"]
+CMD ["/app/entrypoint.sh"]

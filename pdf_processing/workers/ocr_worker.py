@@ -30,11 +30,11 @@ def get_ocr_engine():
 
     try:
         from paddleocr import PaddleOCR
+         # Указываем директорию для моделей
+        model_dir = os.path.join(os.path.expanduser('~'), '.paddleocr')
         _ocr_engine = PaddleOCR(
             use_angle_cls=True,
-            lang='ru',
-            use_gpu=Config.OCR_USE_GPU,
-            show_log=False
+            lang='ru'
         )
         logger.info("Инициализирован PaddleOCR")
     except ImportError:
@@ -49,7 +49,7 @@ def extract_text_with_paddleocr(image_path: str) -> str:
     ocr = get_ocr_engine()
 
     try:
-        result = ocr.ocr(image_path, cls=True)
+        result = ocr.ocr(image_path)
 
         # Собрать весь текст
         text_lines = []

@@ -3,6 +3,7 @@
 
 # PDF и OCR обработка
 pdf2image>=1.17.0
+paddlepaddle>=2.6.0
 paddleocr>=2.7.0
 
 # Базовые утилиты

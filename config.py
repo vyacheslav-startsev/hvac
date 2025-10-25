@@ -12,7 +12,7 @@ class Config:
     """Настройки приложения"""
 
     # Redis настройки
-    REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+    REDIS_HOST = os.getenv('REDIS_HOST', 'redis')
     REDIS_PORT = int(os.getenv('REDIS_PORT', '6379'))
     REDIS_DB = int(os.getenv('REDIS_DB', '0'))
     REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', None) or None
@@ -20,9 +20,6 @@ class Config:
     # Очереди
     TEXT_QUEUE = 'text_page_queue'
     OCR_QUEUE = 'ocr_page_queue'
-
-    # OCR настройки
-    OCR_USE_GPU = os.getenv('OCR_USE_GPU', 'False').lower() == 'true'
 
     # LangChain и LLM настройки
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
@@ -42,7 +39,7 @@ class Config:
     SEMANTIC_MODEL_NAME = os.getenv('SEMANTIC_MODEL_NAME', 'paraphrase-multilingual-MiniLM-L12-v2')
 
     # Qdrant настройки
-    QDRANT_HOST = os.getenv('QDRANT_HOST', 'localhost')
+    QDRANT_HOST = os.getenv('QDRANT_HOST', 'qdrant')
     QDRANT_HTTP_PORT = int(os.getenv('QDRANT_HTTP_PORT', '6333'))
     QDRANT_GRPC_PORT = int(os.getenv('QDRANT_GRPC_PORT', '6334'))
     QDRANT_COLLECTION_NAME = os.getenv('QDRANT_COLLECTION_NAME', 'equipment_synonyms')

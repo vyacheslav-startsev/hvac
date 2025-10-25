@@ -45,7 +45,7 @@ class EquipmentMatcher:
         self.all_synonyms = self._build_synonym_list()
 
         # Qdrant настройки
-        self.qdrant_host = qdrant_host or os.getenv('QDRANT_HOST', 'localhost')
+        self.qdrant_host = qdrant_host or os.getenv('QDRANT_HOST', 'qdrant')
         self.qdrant_port = qdrant_port or int(os.getenv('QDRANT_PORT', '6333'))
         self.collection_name = collection_name or os.getenv('QDRANT_COLLECTION_NAME', 'equipment_synonyms')
 

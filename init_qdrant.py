@@ -19,7 +19,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Настройки
-QDRANT_HOST = os.getenv('QDRANT_HOST', 'localhost')
+QDRANT_HOST = os.getenv('QDRANT_HOST', 'qdrant')
 QDRANT_PORT = int(os.getenv('QDRANT_PORT', '6333'))
 COLLECTION_NAME = os.getenv('QDRANT_COLLECTION_NAME', 'equipment_synonyms')
 SYNONYM_DB_PATH = os.getenv('SYNONYM_DB_PATH', 'equipment_synonyms.json')

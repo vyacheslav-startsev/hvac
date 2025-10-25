@@ -43,6 +43,9 @@ class PDFCoordinator:
 
             # Анализ блоков на странице
             blocks = page.get_text("blocks")
+            
+            if len(blocks) == 0 and (len(page.get_images()) > 0 or len(page.get_drawings()) > 0):
+                return 'image'
 
             for block in blocks:
                 # block[:4] - координаты (x0, y0, x1, y1)
@@ -71,7 +74,7 @@ class PDFCoordinator:
                text_coverage < Config.TEXT_COVERAGE_THRESHOLD:
                 return 'image'
             elif text_coverage > Config.TEXT_COVERAGE_THRESHOLD and \
-                 image_coverage < 0.5:
+                 image_coverage < Config.IMAGE_COVERAGE_THRESHOLD :
                 return 'text'
             elif text_coverage == 0 and image_coverage == 0:
                 return 'blank'
@@ -168,8 +171,7 @@ class PDFCoordinator:
         elif has_text and classification in ['text', 'mixed']:
             return ('text', Config.TEXT_QUEUE)
         elif classification == 'mixed':
-            # Смешанная страница - попробуем сначала текст
-            return ('text', Config.TEXT_QUEUE)
+            return ('ocr', Config.OCR_QUEUE)
         elif classification == 'blank':
             return ('text', Config.TEXT_QUEUE)  # Пустая страница
         else:

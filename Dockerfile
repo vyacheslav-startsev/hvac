@@ -27,6 +27,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Скопировать код приложения
 COPY . .
 
+# Предзагрузить модель SentenceTransformer
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')"
+
 # Создать директорию для временных файлов
 RUN mkdir -p /app/temp
 
